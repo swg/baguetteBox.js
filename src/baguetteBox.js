@@ -512,7 +512,7 @@
         }
 
         // If image is already loaded run callback and return OR If video is already loaded run callback and return
-        if (imageContainer.getElementsByTagName('img').length > 0 || imageContainer.getElementsByTagName('video').length > 0) {
+        if (imageContainer.getElementsByTagName('canvas').length > 0 || imageContainer.getElementsByTagName('video').length > 0) {
             if (callback) {
                 callback();
             }
@@ -521,7 +521,7 @@
 
         // Get element reference, optional caption and source path
         var imageElement = galleryItem.imageElement;
-        var thumbnailElement = isVideo ? imageElement.getElementsByTagName('video')[0] : imageElement.getElementsByTagName('img')[0];
+        var thumbnailElement = isVideo ? imageElement.getElementsByTagName('video')[0] : imageElement.getElementsByTagName('canvas')[0];
         var imageCaption = typeof options.captions === 'function' ?
             options.captions.call(currentGallery, imageElement) :
             imageElement.getAttribute('data-caption') || imageElement.title;
@@ -563,17 +563,21 @@
             }
             figure.appendChild(video);
         } else {
-            // Prepare gallery img element
-            var image = create('img');
-            image.onload = function() {
-                // Remove loader element
-                var spinner = document.querySelector('#baguette-img-' + index + ' .baguetteBox-spinner');
-                figure.removeChild(spinner);
-                if (!options.async && callback) {
-                    callback();
-                }
-            };
-            image.setAttribute('src', imageSrc);
+            // Prepare gallery canvas element
+            var image = create('canvas');
+            window.loadImage(imageSrc, function(img) {
+                window.EXIF.getData(img, function() {
+                    var orientation = EXIF.getTag(this, "Orientation");
+                    var canvas = window.loadImage.scale(img, {orientation: orientation || 0});
+                    image.parentNode.replaceChild(canvas, image)
+                    var spinner = document.querySelector('#baguette-img-' + index + ' .baguetteBox-spinner');
+                    // Remove loader element
+                    figure.removeChild(spinner);
+                    if (!options.async && callback) {
+                        callback();
+                    }
+                });
+            });
             image.alt = thumbnailElement ? thumbnailElement.alt || '' : '';
             if (options.titleTag && imageCaption) {
                 image.title = imageCaption;
