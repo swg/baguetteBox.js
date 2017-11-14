@@ -31,6 +31,7 @@
     "blueimp-load-image": "~2.19.0",
     "browser-sync": "~2.24.7",
     "exif-js": "~2.3.0",
+    "natives": "~1.1.6",
     "gulp": "~3.9.0",
     "gulp-autoprefixer": "~6.0.0",
     "gulp-bump": "~3.1.1",
