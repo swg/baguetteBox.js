@@ -36,7 +36,7 @@
             height: 100%;   // Opera 12 image stretching fix
         }
 
-        img, video {
+        canvas, img, video {
             // IE8 fix
             display: inline-block;
             width: auto;

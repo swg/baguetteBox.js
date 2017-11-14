@@ -10,7 +10,11 @@ var gulp = require('gulp'),
 
 var src = {
     css: ['./src/*.scss', './src/*.css'],
-    js: './src/*.js'
+    js: ['./src/*.js',
+         './node_modules/exif-js/exif.js',
+         './node_modules/blueimp-load-image/js/load-image.js',
+         './node_modules/blueimp-load-image/js/load-image-scale.js',
+         './node_modules/blueimp-load-image/js/load-image-orientation.js']
 };
 var demo = {
     allFiles: './demo/**/*',
