@@ -1,6 +1,6 @@
 {
   "name": "baguettebox.js",
-  "version": "1.9.1",
+  "version": "1.9.1-video-orientation",
   "description": "Simple and easy to use lightbox script written in pure JavaScript",
   "main": [
     "./dist/baguetteBox.js",
@@ -17,6 +17,10 @@
   "repository": {
     "type": "git",
     "url": "git://github.com/feimosi/baguetteBox.js.git"
+  },
+  "dependencies": {
+    "blueimp-load-image": "2.12.2",
+    "exif-js": "2.1.0"
   },
   "ignore": [
     "**/.*",
